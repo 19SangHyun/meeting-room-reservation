@@ -5,7 +5,7 @@
   <ul>
     {% for room in rooms %}
       <li>
-        <strong>{{ room.name }}</strong>  
+        <a href="{% url 'room_detail' room.id %}">{{ room.name }}</a>
         (위치: {{ room.location }}, 수용 인원: {{ room.capacity }})
       </li>
     {% empty %}

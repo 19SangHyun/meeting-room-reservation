@@ -1,0 +1,24 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+<h2>{{ room.name }}</h2>
+<p>위치: {{ room.location }}</p>
+<p>수용 인원: {{ room.capacity }}</p>
+
+<a href="{% url 'make_reservation' room.id %}">예약하기</a>
+
+<h3>예약 현황</h3>
+{% if reservations %}
+  <ul>
+    {% for r in reservations %}
+      <li>{{ r.date }}: {{ r.start_time }} - {{ r.end_time }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>예약된 시간이 없습니다.</p>
+{% endif %}
+{% endblock %}
+
+
+
+
