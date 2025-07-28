@@ -1,0 +1,17 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+  <h1>회의실 목록</h1>
+  <ul>
+    {% for room in rooms %}
+      <li>
+        <strong>{{ room.name }}</strong>  
+        (위치: {{ room.location }}, 수용 인원: {{ room.capacity }})
+      </li>
+    {% empty %}
+      <li>등록된 회의실이 없습니다.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+

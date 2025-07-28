@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .forms import SignUpForm
+from .models import Room
 
 def signup_view(request):
     if request.method == 'POST':
@@ -30,4 +31,8 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+def room_list(request):
+    rooms = Room.objects.all()
+    return render(request, 'webapp/room_list.html', {'rooms': rooms})
 

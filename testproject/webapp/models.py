@@ -33,4 +33,3 @@ class Reservation(models.Model):
 
     class Meta:
         unique_together = ('room', 'date', 'start_time', 'end_time')  # 중복 예약 방지
-
