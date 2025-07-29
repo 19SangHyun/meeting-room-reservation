@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('', views.room_list, name='home'),  # 기본 URL을 회의실 목록으로
     path('signup/', views.signup_view, name='signup'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
@@ -11,6 +12,6 @@ urlpatterns = [
     path('rooms/<int:room_id>/reserve/', views.make_reservation, name='make_reservation'),
     path('reservations/<int:reservation_id>/edit/', views.edit_reservation, name='edit_reservation'),
     path('reservations/<int:reservation_id>/delete/', views.delete_reservation, name='delete_reservation'),
-    # 이후에 회의실 목록 URL 추가 예정
+    
 ]
 
