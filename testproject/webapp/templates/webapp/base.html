@@ -3,10 +3,36 @@
 <head>
     <meta charset="UTF-8" />
     <title>{% block title %}My Meeting App{% endblock %}</title>
+    <style>
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #f0f0f0;
+      }
+      .user-info {
+        font-size: 0.9rem;
+      }
+      a {
+        text-decoration: none;
+        color: #007bff;
+        margin-left: 10px;
+      }
+    </style>
 </head>
 <body>
     <header>
         <h1>회의실 예약 관리 시스템</h1>
+        <div class="user-info">
+          {% if user.is_authenticated %}
+            로그인 사용자: <strong>{{ user.username }}</strong>
+            <a href="{% url 'logout' %}">로그아웃</a>
+          {% else %}
+            <a href="{% url 'login' %}">로그인</a>
+            <a href="{% url 'signup' %}">회원가입</a>
+          {% endif %}
+        </div>
     </header>
     <main>
         {% block content %}

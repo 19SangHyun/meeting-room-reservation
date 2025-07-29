@@ -1,0 +1,26 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+  <h2>예약 삭제 확인</h2>
+
+  <p><strong>{{ reservation.user }}</strong>님의 예약을 삭제하시겠습니까?</p>
+  <ul>
+    <li>회의실: {{ reservation.room.name }}</li>
+    <li>시작 시간: {{ reservation.start_time }}</li>
+    <li>종료 시간: {{ reservation.end_time }}</li>
+  </ul>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">삭제</button>
+    <a href="{% url 'room_detail' reservation.room.id %}">취소</a>
+  </form>
+{% endblock %}
+
+
+
+
+
+
+
+

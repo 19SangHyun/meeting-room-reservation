@@ -1,0 +1,30 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+<h2>예약 수정 - {{ reservation.room.name }}</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">수정하기</button>
+</form>
+
+<h3>이 회의실의 기존 예약</h3>
+<ul>
+  {% for r in reservations %}
+    {% if r.id != reservation.id %}
+      <li>{{ r.date }}: {{ r.start_time }} - {{ r.end_time }}</li>
+    {% endif %}
+  {% endfor %}
+</ul>
+
+<a href="{% url 'room_detail' reservation.room.id %}">돌아가기</a>
+{% endblock %}
+
+
+
+
+
+
+
+

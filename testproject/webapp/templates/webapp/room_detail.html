@@ -11,12 +11,25 @@
 {% if reservations %}
   <ul>
     {% for r in reservations %}
-      <li>{{ r.date }}: {{ r.start_time }} - {{ r.end_time }}</li>
+      <li>
+        {{ r.date }}: {{ r.start_time }} - {{ r.end_time }} 
+        (예약자: {{ r.user.username }})
+        
+        {% if r.user == request.user or request.user.is_staff %}
+          <!-- 수정/삭제 버튼 -->
+          <a href="{% url 'edit_reservation' r.id %}">수정</a>
+          <form action="{% url 'delete_reservation' r.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+          </form>
+        {% endif %}
+      </li>
     {% endfor %}
   </ul>
 {% else %}
   <p>예약된 시간이 없습니다.</p>
 {% endif %}
+
 {% endblock %}
 
 

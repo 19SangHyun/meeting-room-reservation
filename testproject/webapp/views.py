@@ -9,6 +9,8 @@ from django.utils.timezone import localdate
 from .models import Reservation
 from django.core.serializers.json import DjangoJSONEncoder
 import json
+from django.core.exceptions import PermissionDenied
+from django.contrib import messages
 
 
 def signup_view(request):
@@ -99,3 +101,57 @@ def make_reservation(request, room_id):
         'room': room,
         'existing_reservations': reservations_json,
     })
+
+@login_required
+def edit_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    if request.user != reservation.user and not request.user.is_staff:
+        return HttpResponseForbidden("수정 권한이 없습니다.")
+
+    if request.method == 'POST':
+        form = ReservationForm(request.POST, instance=reservation)
+        if form.is_valid():
+            new_reservation = form.save(commit=False)
+
+            # 중복 확인 (자기 자신 제외)
+            overlapping = Reservation.objects.filter(
+                room=reservation.room,
+                date=new_reservation.date,
+                start_time__lt=new_reservation.end_time,
+                end_time__gt=new_reservation.start_time
+            ).exclude(id=reservation.id)
+
+            if overlapping.exists():
+                form.add_error(None, '해당 시간에 이미 예약이 있습니다.')
+            else:
+                new_reservation.save()
+                return redirect('room_detail', room_id=reservation.room.id)
+    else:
+        form = ReservationForm(instance=reservation)
+
+    reservations = Reservation.objects.filter(room=reservation.room)
+
+    return render(request, 'webapp/edit_reservation.html', {
+        'form': form,
+        'reservation': reservation,
+        'reservations': reservations,
+    })
+
+
+@login_required
+def delete_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    # 본인 또는 관리자만 삭제 가능
+    if reservation.user != request.user and not request.user.is_staff:
+        messages.error(request, "삭제 권한이 없습니다.")
+        return redirect('room_detail', room_id=reservation.room.id)
+
+    if request.method == 'POST':
+        room_id = reservation.room.id
+        reservation.delete()
+        messages.success(request, "예약이 삭제되었습니다.")
+        return redirect('room_detail', room_id=room_id)
+
+    return render(request, 'webapp/delete_reservation.html', {'reservation': reservation})
