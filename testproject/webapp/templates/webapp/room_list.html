@@ -1,17 +1,26 @@
 {% extends 'webapp/base.html' %}
 
 {% block content %}
-  <h1>회의실 목록</h1>
-  <ul>
-    {% for room in rooms %}
-      <li>
-        <a href="{% url 'room_detail' room.id %}">{{ room.name }}</a>
-        (위치: {{ room.location }}, 수용 인원: {{ room.capacity }})
-      </li>
-    {% empty %}
-      <li>등록된 회의실이 없습니다.</li>
-    {% endfor %}
-  </ul>
+<h2 class="mb-4">회의실 목록</h2>
+
+<div class="row">
+  {% for room in rooms %}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ room.name }}</h5>
+          <p class="card-text">
+            위치: {{ room.location }}<br>
+            수용 인원: {{ room.capacity }}
+          </p>
+          <a href="{% url 'room_detail' room.id %}" class="btn btn-primary">자세히 보기</a>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>등록된 회의실이 없습니다.</p>
+  {% endfor %}
+</div>
 {% endblock %}
 
 
