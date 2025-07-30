@@ -1,41 +1,45 @@
 {% extends 'webapp/base.html' %}
 
 {% block content %}
-<div class="mb-4">
-  <h2>{{ room.name }}</h2>
-  <p><strong>위치:</strong> {{ room.location }}</p>
-  <p><strong>수용 인원:</strong> {{ room.capacity }}</p>
-  <a href="{% url 'make_reservation' room.id %}" class="btn btn-success">예약하기</a>
-</div>
+<h2>{{ room.name }}</h2>
 
-<hr>
+<!-- 이미지가 있을 경우 보여주기 -->
+{% if room.image %}
+  <img src="{{ room.image.url }}" alt="{{ room.name }}" style="max-width: 300px; height: auto; margin-bottom: 20px;">
+{% else %}
+  <p>이미지가 없습니다.</p>
+{% endif %}
 
-<h3 class="mb-3">예약 현황</h3>
+<p>위치: {{ room.location }}</p>
+<p>수용 인원: {{ room.capacity }}</p>
+
+<a href="{% url 'make_reservation' room.id %}">예약하기</a>
+
+<!-- 이하 예약 현황 등 기존 내용 유지 -->
+<h3>예약 현황</h3>
 {% if reservations %}
-  <ul class="list-group">
+  <ul>
     {% for r in reservations %}
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-          <strong>{{ r.date }}</strong> | {{ r.start_time }} - {{ r.end_time }}
-          <br>
-          <small class="text-muted">예약자: {{ r.user.username }}</small>
-        </div>
+      <li>
+        {{ r.date }}: {{ r.start_time }} - {{ r.end_time }} 
+        (예약자: {{ r.user.username }})
+        
         {% if r.user == request.user or request.user.is_staff %}
-          <div>
-            <a href="{% url 'edit_reservation' r.id %}" class="btn btn-sm btn-outline-primary">수정</a>
-            <form action="{% url 'delete_reservation' r.id %}" method="post" class="d-inline">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
-            </form>
-          </div>
+          <a href="{% url 'edit_reservation' r.id %}">수정</a>
+          <form action="{% url 'delete_reservation' r.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+          </form>
         {% endif %}
       </li>
     {% endfor %}
   </ul>
 {% else %}
-  <p class="text-muted">예약된 시간이 없습니다.</p>
+  <p>예약된 시간이 없습니다.</p>
 {% endif %}
+
 {% endblock %}
+
 
 
 

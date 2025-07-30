@@ -117,6 +117,9 @@ LOGIN_URL = '/login/'  # 로그인 안 되어있을 때 자동으로 여기로 �
 LOGIN_REDIRECT_URL = '/'  # 로그인 성공 후 이동할 페이지
 
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
