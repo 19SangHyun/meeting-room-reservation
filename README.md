@@ -1,17 +1,17 @@
 # 🏢 회의실 예약 관리 시스템
 
-👉 [프로젝트 GitHub Repository](https://github.com/19SangHyun/meeting-room-reservation)
+ [프로젝트 GitHub Repository](https://github.com/19SangHyun/meeting-room-reservation)
 
-👉  [데모 URL링크](http://54.206.101.220:8000/)
+  [데모 URL링크](http://54.206.101.220:8000/)
 
-## 📌 프로젝트 개요
+##  프로젝트 개요
 사내 회의실의 효율적인 예약과 관리를 위한 웹 애플리케이션입니다.  
 Django를 기반으로 제작되었으며, 사용자 인증, 회의실 예약, 중복 방지 등의 기능을 제공합니다.  
 Docker 기반으로 누구나 손쉽게 실행할 수 있도록 구성되었습니다.
 
 ---
 
-## ✅ 주요 기능
+##  주요 기능
 - 사용자 회원가입 / 로그인
 - 회의실 등록 (관리자 전용)
 - 회의실 목록 조회
@@ -20,7 +20,7 @@ Docker 기반으로 누구나 손쉽게 실행할 수 있도록 구성되었습�
 
 ---
 
-## ⚙️ 기술 스택
+##  기술 스택
 | 구분 | 기술 |
 |------|------|
 | Backend | Python 3.13.5, Django |
@@ -30,11 +30,11 @@ Docker 기반으로 누구나 손쉽게 실행할 수 있도록 구성되었습�
 
 ---
 
-## 🐳 로컬 실행 방법 (Docker 기반)
+##  로컬 실행 방법 (Docker 기반)
 
 ### 1. Docker 설치
 Docker가 설치되어 있지 않다면 아래 링크를 참고해 설치해 주세요.  
-👉 [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+ [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
 
 ### 2. Docker 이미지 다운로드
 ```bash
@@ -61,7 +61,7 @@ http://localhost:8000/admin (로컬) , http://54.206.101.220:8000/admin (웹배�
 
 ---
 
-## 🧱 설계 내용 및 고민
+##  설계 내용 및 고민
 
 ### 1. 사용자 인증 및 권한
 Django 기본 User 모델을 상속한 커스텀 유저 모델 사용
@@ -101,7 +101,7 @@ TailwindCSS로 간단한 반응형 UI 구성
 ---
 
 
-## 🚧 향후 개선 사항
+##  향후 개선 사항
 PostgreSQL 연동 및 배포 환경 데이터베이스 분리
 
 관리자 전용 예약 통계 시각화 대시보드
